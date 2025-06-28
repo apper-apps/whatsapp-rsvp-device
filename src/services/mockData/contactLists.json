@@ -1,0 +1,53 @@
+[
+  {
+    "Id": 1,
+    "name": "VIP Employees",
+    "eventId": "1",
+    "contactCount": 45,
+    "description": "Senior management and department heads",
+    "isDeleted": false,
+    "createdAt": "2024-01-10T09:00:00Z",
+    "tags": ["vip", "employees", "management"]
+  },
+  {
+    "Id": 2,
+    "name": "Press & Media",
+    "eventId": "1",
+    "contactCount": 32,
+    "description": "Journalists and media representatives",
+    "isDeleted": false,
+    "createdAt": "2024-01-10T09:15:00Z",
+    "tags": ["media", "press", "external"]
+  },
+  {
+    "Id": 3,
+    "name": "Key Clients",
+    "eventId": "2",
+    "contactCount": 28,
+    "description": "Our most important business clients",
+    "isDeleted": false,
+    "createdAt": "2024-01-15T14:30:00Z",
+    "tags": ["clients", "business", "vip"]
+  },
+  {
+    "Id": 4,
+    "name": "All Employees",
+    "eventId": "3",
+    "contactCount": 156,
+    "description": "Complete employee contact list",
+    "isDeleted": false,
+    "createdAt": "2024-01-20T11:15:00Z",
+    "tags": ["employees", "internal"]
+  },
+  {
+    "Id": 5,
+    "name": "Former Clients",
+    "eventId": "4",
+    "contactCount": 18,
+    "description": "Previous clients for re-engagement",
+    "isDeleted": true,
+    "deletedAt": "2024-01-28T10:30:00Z",
+    "createdAt": "2024-01-25T16:45:00Z",
+    "tags": ["clients", "former"]
+  }
+]

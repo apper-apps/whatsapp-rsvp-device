@@ -1,0 +1,74 @@
+[
+  {
+    "Id": 1,
+    "contactId": "1",
+    "eventId": "1",
+    "content": "Hi John Smith, you're invited to our Annual Company Gala on February 15th at Hotel Marriott. RSVP here: https://example.com/rsvp/1",
+    "status": "read",
+    "sentAt": "2024-02-01T10:30:00Z",
+    "deliveredAt": "2024-02-01T10:30:30Z",
+    "readAt": "2024-02-01T10:35:00Z",
+    "error": null,
+    "messageType": "invitation"
+  },
+  {
+    "Id": 2,
+    "contactId": "2",
+    "eventId": "1",
+    "content": "Hi Sarah Johnson, you're invited to our Annual Company Gala on February 15th at Hotel Marriott. RSVP here: https://example.com/rsvp/1",
+    "status": "delivered",
+    "sentAt": "2024-02-01T11:00:00Z",
+    "deliveredAt": "2024-02-01T11:00:45Z",
+    "readAt": null,
+    "error": null,
+    "messageType": "invitation"
+  },
+  {
+    "Id": 3,
+    "contactId": "3",
+    "eventId": "2",
+    "content": "Hi Michael Chen, you're exclusively invited to our Product Launch Event on February 28th. Don't miss this exciting launch! RSVP: https://example.com/rsvp/2",
+    "status": "sent",
+    "sentAt": "2024-02-01T09:45:00Z",
+    "deliveredAt": null,
+    "readAt": null,
+    "error": null,
+    "messageType": "invitation"
+  },
+  {
+    "Id": 4,
+    "contactId": "4",
+    "eventId": "1",
+    "content": "Hi Emily Davis, you're invited to our Annual Company Gala on February 15th at Hotel Marriott. RSVP here: https://example.com/rsvp/1",
+    "status": "failed",
+    "sentAt": "2024-02-01T10:15:00Z",
+    "deliveredAt": null,
+    "readAt": null,
+    "error": "Invalid phone number format",
+    "messageType": "invitation"
+  },
+  {
+    "Id": 5,
+    "contactId": "5",
+    "eventId": "1",
+    "content": "Hi David Wilson, you're invited to our Annual Company Gala on February 15th at Hotel Marriott. RSVP here: https://example.com/rsvp/1",
+    "status": "read",
+    "sentAt": "2024-02-01T12:20:00Z",
+    "deliveredAt": "2024-02-01T12:20:30Z",
+    "readAt": "2024-02-01T12:25:00Z",
+    "error": null,
+    "messageType": "invitation"
+  },
+  {
+    "Id": 6,
+    "contactId": "1",
+    "eventId": "1",
+    "content": "Hi John Smith, just a friendly reminder about our Annual Company Gala tomorrow! Looking forward to seeing you there.",
+    "status": "delivered",
+    "sentAt": "2024-02-14T09:00:00Z",
+    "deliveredAt": "2024-02-14T09:00:30Z",
+    "readAt": null,
+    "error": null,
+    "messageType": "reminder"
+  }
+]

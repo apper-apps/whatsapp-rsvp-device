@@ -1,0 +1,38 @@
+[
+  {
+    "Id": 1,
+    "eventId": "1",
+    "phone": "+60123456789",
+    "name": "John Smith",
+    "response": "yes",
+    "submittedAt": "2024-02-01T10:40:00Z",
+    "notes": "Looking forward to the event!"
+  },
+  {
+    "Id": 2,
+    "eventId": "1",
+    "phone": "+60123456795",
+    "name": "Robert Taylor",
+    "response": "yes",
+    "submittedAt": "2024-02-01T14:50:00Z",
+    "notes": "Will be there with my spouse"
+  },
+  {
+    "Id": 3,
+    "eventId": "1",
+    "phone": "+60123456795",
+    "name": "David Wilson",
+    "response": "no",
+    "submittedAt": "2024-02-01T12:30:00Z",
+    "notes": "Unfortunately have a conflict that evening"
+  },
+  {
+    "Id": 4,
+    "eventId": "2",
+    "phone": "+60123456794",
+    "name": "Lisa Anderson",
+    "response": "maybe",
+    "submittedAt": "2024-02-01T13:15:00Z",
+    "notes": "Checking my calendar"
+  }
+]

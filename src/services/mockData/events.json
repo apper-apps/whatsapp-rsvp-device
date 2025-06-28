@@ -1,0 +1,50 @@
+[
+  {
+    "Id": 1,
+    "name": "Annual Company Gala",
+    "date": "2024-02-15",
+    "location": "Grand Ballroom, Hotel Marriott",
+    "description": "Join us for our annual company celebration with dinner, awards, and entertainment.",
+    "contactLists": ["1", "2"],
+    "messageTemplate": "Hi {Name}, you're invited to our {Event} on February 15th at Hotel Marriott. RSVP here: {link}",
+    "rsvpFormUrl": "https://example.com/rsvp/1",
+    "createdAt": "2024-01-10T09:00:00Z",
+    "status": "active"
+  },
+  {
+    "Id": 2,
+    "name": "Product Launch Event",
+    "date": "2024-02-28",
+    "location": "Tech Conference Center",
+    "description": "Be the first to experience our revolutionary new product launch.",
+    "contactLists": ["2", "3"],
+    "messageTemplate": "Hi {Name}, you're exclusively invited to our {Event} on February 28th. Don't miss this exciting launch! RSVP: {link}",
+    "rsvpFormUrl": "https://example.com/rsvp/2",
+    "createdAt": "2024-01-15T14:30:00Z",
+    "status": "active"
+  },
+  {
+    "Id": 3,
+    "name": "Quarterly Team Building",
+    "date": "2024-03-10",
+    "location": "Adventure Park",
+    "description": "Team building activities and outdoor fun for all employees.",
+    "contactLists": ["1"],
+    "messageTemplate": "Hey {Name}! Ready for some fun? Join us at {Event} on March 10th at Adventure Park. RSVP: {link}",
+    "rsvpFormUrl": "https://example.com/rsvp/3",
+    "createdAt": "2024-01-20T11:15:00Z",
+    "status": "draft"
+  },
+  {
+    "Id": 4,
+    "name": "Client Appreciation Dinner",
+    "date": "2024-03-25",
+    "location": "Rooftop Restaurant",
+    "description": "An exclusive dinner to thank our valued clients for their continued partnership.",
+    "contactLists": ["3"],
+    "messageTemplate": "Dear {Name}, we're honored to invite you to our {Event} on March 25th at the Rooftop Restaurant. RSVP: {link}",
+    "rsvpFormUrl": "https://example.com/rsvp/4",
+    "createdAt": "2024-01-25T16:45:00Z",
+    "status": "active"
+  }
+]
