@@ -27,9 +27,11 @@ class EventService {
   async create(eventData) {
     await this.delay(500)
     
-    const newEvent = {
+const newEvent = {
       Id: Math.max(...this.events.map(e => e.Id), 0) + 1,
       ...eventData,
+      eventName: eventData.eventName || eventData.name,
+      websiteLink: eventData.websiteLink || '',
       createdAt: new Date().toISOString(),
       status: 'draft',
       rsvpFormUrl: `https://example.com/rsvp/${Math.max(...this.events.map(e => e.Id), 0) + 1}`

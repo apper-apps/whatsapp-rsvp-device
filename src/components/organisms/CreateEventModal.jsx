@@ -8,6 +8,8 @@ import eventService from '@/services/api/eventService'
 const CreateEventModal = ({ isOpen, onClose, onEventCreated }) => {
   const [formData, setFormData] = useState({
     name: '',
+    eventName: '',
+    websiteLink: '',
     date: '',
     location: '',
     description: '',
@@ -23,10 +25,11 @@ const CreateEventModal = ({ isOpen, onClose, onEventCreated }) => {
     }
   }
 
-  const validateForm = () => {
+const validateForm = () => {
     const newErrors = {}
     
     if (!formData.name.trim()) newErrors.name = 'Event name is required'
+    if (!formData.eventName.trim()) newErrors.eventName = 'Display name is required'
     if (!formData.date) newErrors.date = 'Event date is required'
     if (!formData.location.trim()) newErrors.location = 'Event location is required'
     
@@ -43,8 +46,10 @@ const CreateEventModal = ({ isOpen, onClose, onEventCreated }) => {
     try {
       const newEvent = await eventService.create(formData)
       onEventCreated(newEvent)
-      setFormData({
+setFormData({
         name: '',
+        eventName: '',
+        websiteLink: '',
         date: '',
         location: '',
         description: '',
@@ -94,15 +99,34 @@ const CreateEventModal = ({ isOpen, onClose, onEventCreated }) => {
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="p-6 space-y-6">
+<form onSubmit={handleSubmit} className="p-6 space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <Input
-                  label="Event Name"
+                  label="Internal Name"
                   value={formData.name}
                   onChange={(e) => handleInputChange('name', e.target.value)}
-                  placeholder="Annual Company Gala"
+                  placeholder="company-gala-2024"
                   error={errors.name}
                   required
+                />
+                
+                <Input
+                  label="Event Name"
+                  value={formData.eventName}
+                  onChange={(e) => handleInputChange('eventName', e.target.value)}
+                  placeholder="Annual Company Gala"
+                  error={errors.eventName}
+                  required
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Input
+                  label="Website Link"
+                  value={formData.websiteLink}
+                  onChange={(e) => handleInputChange('websiteLink', e.target.value)}
+                  placeholder="https://company.com/gala"
+                  icon="Globe"
                 />
                 
                 <Input
@@ -114,7 +138,6 @@ const CreateEventModal = ({ isOpen, onClose, onEventCreated }) => {
                   required
                 />
               </div>
-
               <Input
                 label="Location"
                 value={formData.location}

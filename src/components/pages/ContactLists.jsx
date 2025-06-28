@@ -18,10 +18,10 @@ const ContactLists = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
+  const [viewMode, setViewMode] = useState('cards')
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [showImportModal, setShowImportModal] = useState(false)
   const [selectedList, setSelectedList] = useState(null)
-
   useEffect(() => {
     loadContactLists()
   }, [])
@@ -105,8 +105,31 @@ const ContactLists = () => {
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Contact Lists</h1>
           <p className="text-gray-600">Organize your contacts for targeted event invitations</p>
-        </div>
-        <div className="flex space-x-3">
+</div>
+        <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2">
+            <span className="text-sm font-medium text-gray-700">Views:</span>
+            <div className="flex rounded-lg border border-gray-300 bg-white">
+              <Button
+                variant={viewMode === 'cards' ? 'primary' : 'ghost'}
+                size="sm"
+                icon="Grid3x3"
+                onClick={() => setViewMode('cards')}
+                className="rounded-r-none border-0"
+              >
+                Cards
+              </Button>
+              <Button
+                variant={viewMode === 'list' ? 'primary' : 'ghost'}
+                size="sm"
+                icon="List"
+                onClick={() => setViewMode('list')}
+                className="rounded-l-none border-0 border-l border-gray-300"
+              >
+                List
+              </Button>
+            </div>
+          </div>
           <Button
             variant="outline"
             icon="Upload"
@@ -122,7 +145,6 @@ const ContactLists = () => {
           </Button>
         </div>
       </div>
-
       {/* Search */}
       <div className="max-w-md">
         <SearchBar
@@ -138,8 +160,8 @@ const ContactLists = () => {
           title="No contact lists found"
           description="Try adjusting your search criteria"
           icon="Search"
-        />
-      ) : (
+/>
+      ) : viewMode === 'cards' ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredLists.map((list) => (
             <Card
@@ -234,8 +256,99 @@ const ContactLists = () => {
                 </div>
               </div>
             </Card>
-          ))}
+))}
         </div>
+      ) : (
+        <Card padding="p-0">
+          <div className="overflow-x-auto">
+            <table className="w-full table-zebra">
+              <thead className="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th className="text-left py-4 px-6 font-semibold text-gray-900">Name</th>
+                  <th className="text-left py-4 px-6 font-semibold text-gray-900">Contacts</th>
+                  <th className="text-left py-4 px-6 font-semibold text-gray-900">Created</th>
+                  <th className="text-left py-4 px-6 font-semibold text-gray-900">Tags</th>
+                  <th className="text-right py-4 px-6 font-semibold text-gray-900">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredLists.map((list) => (
+                  <tr key={list.Id} className="border-b border-gray-100">
+                    <td className="py-4 px-6">
+                      <div className="font-medium text-gray-900">{list.name}</div>
+                      {list.description && (
+                        <div className="text-sm text-gray-600 mt-1 line-clamp-1">
+                          {list.description}
+                        </div>
+                      )}
+                    </td>
+                    <td className="py-4 px-6">
+                      <div className="flex items-center text-gray-600">
+                        <ApperIcon name="Users" size={16} className="mr-2" />
+                        <span className="text-sm font-medium">
+                          {list.contactCount}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="py-4 px-6">
+                      <div className="text-sm text-gray-600">
+                        {format(new Date(list.createdAt), 'MMM dd, yyyy')}
+                      </div>
+                    </td>
+                    <td className="py-4 px-6">
+                      {list.tags && list.tags.length > 0 ? (
+                        <div className="flex space-x-1">
+                          {list.tags.slice(0, 3).map((tag, index) => (
+                            <Badge key={index} variant="default" size="sm">
+                              {tag}
+                            </Badge>
+                          ))}
+                          {list.tags.length > 3 && (
+                            <Badge variant="default" size="sm">
+                              +{list.tags.length - 3}
+                            </Badge>
+                          )}
+                        </div>
+                      ) : (
+                        <span className="text-gray-400">—</span>
+                      )}
+                    </td>
+                    <td className="py-4 px-6 text-right">
+                      <div className="flex justify-end space-x-2">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          icon="Eye"
+                        >
+                          View
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          icon="Upload"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleImportContacts(list)
+                          }}
+                        />
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          icon="Trash2"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleDeleteList(list.Id)
+                          }}
+                          className="text-red-600 hover:text-red-700"
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Card>
       )}
 
       {/* Modals */}

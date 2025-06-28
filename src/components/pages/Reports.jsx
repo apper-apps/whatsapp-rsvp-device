@@ -308,12 +308,13 @@ const Reports = () => {
             placeholder="Search contacts, phone numbers, or emails..."
           />
         </div>
-        <div className="flex space-x-4">
+<div className="flex space-x-4">
           <FilterDropdown
             label="Filter by event"
             options={eventOptions}
             value={eventFilter}
             onChange={setEventFilter}
+            searchable={true}
           />
           <FilterDropdown
             label="Filter by status"
