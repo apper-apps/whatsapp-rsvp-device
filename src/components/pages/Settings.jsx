@@ -30,13 +30,18 @@ const Settings = () => {
     }
   ])
 
-  const [notificationSettings, setNotificationSettings] = useState({
+const [notificationSettings, setNotificationSettings] = useState({
     emailNotifications: true,
     dailyReports: true,
     deliveryUpdates: true,
     rsvpAlerts: true
   })
 
+  const [reminderSettings, setReminderSettings] = useState({
+    maxReminders: 3,
+    maxDurationValue: 7,
+    maxDurationType: 'days'
+  })
   const handleSaveWhatsAppSettings = () => {
     // Mock save functionality
     setWhatsappSettings(prev => ({ ...prev, isConnected: true }))
@@ -64,10 +69,13 @@ const Settings = () => {
     }
   }
 
-  const handleSaveNotifications = () => {
+const handleSaveNotifications = () => {
     toast.success('Notification settings saved successfully!')
   }
 
+  const handleSaveReminders = () => {
+    toast.success('Reminder settings saved successfully!')
+  }
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -264,6 +272,79 @@ const Settings = () => {
               icon="Save"
             >
               Save Notification Settings
+            </Button>
+          </div>
+        </div>
+</Card>
+
+      {/* Reminders */}
+      <Card>
+        <div className="space-y-6">
+          <div>
+            <h2 className="text-lg font-semibold text-gray-900">Reminders</h2>
+            <p className="text-sm text-gray-600">Configure global reminder settings for events</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Maximum Number of Reminders
+              </label>
+              <select
+                value={reminderSettings.maxReminders}
+                onChange={(e) => setReminderSettings(prev => ({ ...prev, maxReminders: parseInt(e.target.value) }))}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-whatsapp-primary focus:border-transparent"
+              >
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => (
+                  <option key={num} value={num}>{num}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Maximum Duration Between Reminders
+              </label>
+              <div className="flex space-x-2">
+                <input
+                  type="number"
+                  min="1"
+                  max="365"
+                  value={reminderSettings.maxDurationValue}
+                  onChange={(e) => setReminderSettings(prev => ({ ...prev, maxDurationValue: parseInt(e.target.value) }))}
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-whatsapp-primary focus:border-transparent"
+                />
+                <select
+                  value={reminderSettings.maxDurationType}
+                  onChange={(e) => setReminderSettings(prev => ({ ...prev, maxDurationType: e.target.value }))}
+                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-whatsapp-primary focus:border-transparent"
+                >
+                  <option value="minutes">Minutes</option>
+                  <option value="hours">Hours</option>
+                  <option value="days">Days</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div className="flex items-start space-x-3">
+              <ApperIcon name="Info" size={20} className="text-blue-500 mt-0.5" />
+              <div>
+                <h4 className="text-sm font-medium text-blue-900">Reminder Settings Info</h4>
+                <p className="text-sm text-blue-700 mt-1">
+                  These settings apply globally to all events. Individual events can set reminders within these limits.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-4 border-t border-gray-200">
+            <Button
+              onClick={handleSaveReminders}
+              icon="Save"
+            >
+              Save Reminder Settings
             </Button>
           </div>
         </div>

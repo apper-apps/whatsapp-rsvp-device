@@ -109,17 +109,9 @@ const EventDetail = () => {
               onClick={() => navigate('/events')}
               className="text-white hover:bg-white hover:bg-opacity-20"
             />
-            <div>
+<div>
               <h1 className="text-2xl font-bold">{event.name}</h1>
-              <div className="flex items-center space-x-4 mt-2 text-sm opacity-90">
-                <div className="flex items-center">
-                  <ApperIcon name="Calendar" size={16} className="mr-2" />
-                  {format(new Date(event.date), 'MMMM dd, yyyy')}
-                </div>
-                <div className="flex items-center">
-                  <ApperIcon name="MapPin" size={16} className="mr-2" />
-                  {event.location}
-                </div>
+              <div className="flex items-center mt-2">
                 <Badge variant="whatsapp" className="bg-white bg-opacity-20 text-white">
                   {event.status}
                 </Badge>
