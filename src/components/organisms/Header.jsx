@@ -27,8 +27,8 @@ const Header = ({ onMenuClick }) => {
     }
   }
 
-  return (
-    <header className="bg-white border-b border-gray-200 px-6 py-4">
+return (
+    <header className="bg-primary-50 border-b border-primary-200 px-6 py-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <Button
@@ -39,8 +39,8 @@ const Header = ({ onMenuClick }) => {
             className="lg:hidden"
           />
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">{getPageTitle()}</h1>
-            <p className="text-sm text-gray-500">Manage your WhatsApp RSVP campaigns</p>
+            <h1 className="text-2xl font-bold text-basecamp-dark">{getPageTitle()}</h1>
+            <p className="text-sm text-primary-700">Manage your WhatsApp RSVP campaigns</p>
           </div>
         </div>
         

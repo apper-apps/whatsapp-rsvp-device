@@ -6,32 +6,33 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
+colors: {
         basecamp: {
-          primary: '#1f4788',
-          secondary: '#5a67d8',
-          blue: '#4299e1',
-          green: '#48bb78',
-          orange: '#ed8936',
-          red: '#e53e3e',
-          yellow: '#d69e2e',
-          purple: '#805ad5',
-          teal: '#38b2ac',
-          background: '#f7fafc',
-          light: '#edf2f7',
-          dark: '#2d3748'
+          primary: '#F5F5DC',
+          secondary: '#8B4513',
+          tertiary: '#9CAF88',
+          blue: '#6B7280',
+          green: '#9CAF88',
+          orange: '#D2691E',
+          red: '#CD5C5C',
+          yellow: '#DAA520',
+          purple: '#9370DB',
+          teal: '#5F9EA0',
+          background: '#FEFDF8',
+          light: '#F9F7F4',
+          dark: '#5D4E37'
         },
         primary: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a'
+          50: '#FEFDF8',
+          100: '#F9F7F4',
+          200: '#F5F5DC',
+          300: '#E6E6D1',
+          400: '#D4D4B8',
+          500: '#C2C2A0',
+          600: '#A8A887',
+          700: '#8B8B6E',
+          800: '#6D6D56',
+          900: '#5D4E37'
         }
       },
       fontFamily: {
