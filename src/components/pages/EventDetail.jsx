@@ -117,13 +117,14 @@ const EventDetail = () => {
                 </Badge>
               </div>
             </div>
-          </div>
+</div>
           
           <div className="flex space-x-3">
             <Button
               variant="secondary"
               size="sm"
               icon="Settings"
+              onClick={() => navigate('/settings')}
             >
               Settings
             </Button>
