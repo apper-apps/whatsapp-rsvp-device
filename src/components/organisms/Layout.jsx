@@ -6,8 +6,8 @@ import Header from '@/components/organisms/Header'
 const Layout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(true)
 
-  return (
-<div className="flex h-screen bg-basecamp-background">
+return (
+    <div className="flex h-screen bg-background transition-colors duration-300">
       {/* Sidebar */}
       <Sidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
       

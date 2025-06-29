@@ -4,35 +4,49 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  theme: {
+theme: {
     extend: {
-colors: {
-        basecamp: {
-          primary: '#F5F5DC',
-          secondary: '#8B4513',
-          tertiary: '#9CAF88',
-          blue: '#6B7280',
-          green: '#9CAF88',
-          orange: '#D2691E',
-          red: '#CD5C5C',
-          yellow: '#DAA520',
-          purple: '#9370DB',
-          teal: '#5F9EA0',
-          background: '#FEFDF8',
-          light: '#F9F7F4',
-          dark: '#5D4E37'
-        },
+      colors: {
+        // Monday.com inspired modern SaaS colors
         primary: {
-          50: '#FEFDF8',
-          100: '#F9F7F4',
-          200: '#F5F5DC',
-          300: '#E6E6D1',
-          400: '#D4D4B8',
-          500: '#C2C2A0',
-          600: '#A8A887',
-          700: '#8B8B6E',
-          800: '#6D6D56',
-          900: '#5D4E37'
+          50: 'rgb(var(--color-primary-50) / <alpha-value>)',
+          100: 'rgb(var(--color-primary-100) / <alpha-value>)',
+          200: 'rgb(var(--color-primary-200) / <alpha-value>)',
+          300: 'rgb(var(--color-primary-300) / <alpha-value>)',
+          400: 'rgb(var(--color-primary-400) / <alpha-value>)',
+          500: 'rgb(var(--color-primary-500) / <alpha-value>)',
+          600: 'rgb(var(--color-primary-600) / <alpha-value>)',
+          700: 'rgb(var(--color-primary-700) / <alpha-value>)',
+          800: 'rgb(var(--color-primary-800) / <alpha-value>)',
+          900: 'rgb(var(--color-primary-900) / <alpha-value>)'
+        },
+        secondary: {
+          50: 'rgb(var(--color-secondary-50) / <alpha-value>)',
+          100: 'rgb(var(--color-secondary-100) / <alpha-value>)',
+          200: 'rgb(var(--color-secondary-200) / <alpha-value>)',
+          300: 'rgb(var(--color-secondary-300) / <alpha-value>)',
+          400: 'rgb(var(--color-secondary-400) / <alpha-value>)',
+          500: 'rgb(var(--color-secondary-500) / <alpha-value>)',
+          600: 'rgb(var(--color-secondary-600) / <alpha-value>)',
+          700: 'rgb(var(--color-secondary-700) / <alpha-value>)',
+          800: 'rgb(var(--color-secondary-800) / <alpha-value>)',
+          900: 'rgb(var(--color-secondary-900) / <alpha-value>)'
+        },
+        accent: {
+          blue: 'rgb(var(--color-accent-blue) / <alpha-value>)',
+          green: 'rgb(var(--color-accent-green) / <alpha-value>)',
+          purple: 'rgb(var(--color-accent-purple) / <alpha-value>)',
+          orange: 'rgb(var(--color-accent-orange) / <alpha-value>)',
+          red: 'rgb(var(--color-accent-red) / <alpha-value>)',
+          yellow: 'rgb(var(--color-accent-yellow) / <alpha-value>)'
+        },
+        background: 'rgb(var(--color-background) / <alpha-value>)',
+        surface: 'rgb(var(--color-surface) / <alpha-value>)',
+        border: 'rgb(var(--color-border) / <alpha-value>)',
+        text: {
+          primary: 'rgb(var(--color-text-primary) / <alpha-value>)',
+          secondary: 'rgb(var(--color-text-secondary) / <alpha-value>)',
+          muted: 'rgb(var(--color-text-muted) / <alpha-value>)'
         }
       },
       fontFamily: {
