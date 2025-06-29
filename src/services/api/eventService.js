@@ -88,9 +88,32 @@ const newEvent = {
       responseRate: 65.0,
       deliveryRate: 95.8
     }
+return stats
+  }
+
+  async getReminderSettings(eventId) {
+    await this.delay(200)
     
-    return stats
+    // Mock reminder settings for the event
+    // In a real app, this would fetch from database
+    const reminderSettings = {
+      maxReminders: 3,
+      maxDurationValue: 24,
+      maxDurationType: 'hours',
+      overrideGlobal: false
+    }
+    
+    return reminderSettings
+  }
+
+  async saveReminderSettings(eventId, reminderData) {
+    await this.delay(300)
+    
+    // In a real app, this would save to database
+    // For now, we'll just simulate success
+    toast.success('Event reminder settings saved successfully!')
+    
+    return { ...reminderData }
   }
 }
-
 export default new EventService()

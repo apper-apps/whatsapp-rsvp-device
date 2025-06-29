@@ -18,29 +18,32 @@ import { format } from 'date-fns'
 const EventDetail = () => {
   const { eventId } = useParams()
   const navigate = useNavigate()
-  const [event, setEvent] = useState(null)
+const [event, setEvent] = useState(null)
   const [contacts, setContacts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [activeTab, setActiveTab] = useState('overview')
   const [stats, setStats] = useState(null)
-
+  const [reminderSettings, setReminderSettings] = useState(null)
+  const [isAdmin] = useState(true) // Mock admin check
   useEffect(() => {
     loadEventData()
   }, [eventId])
 
-  const loadEventData = async () => {
+const loadEventData = async () => {
     try {
       setLoading(true)
       setError('')
       
-      const [eventData, statsData] = await Promise.all([
+      const [eventData, statsData, reminderData] = await Promise.all([
         eventService.getById(eventId),
-        eventService.getEventStats(eventId)
+        eventService.getEventStats(eventId),
+        eventService.getReminderSettings(eventId)
       ])
       
       setEvent(eventData)
       setStats(statsData)
+      setReminderSettings(reminderData)
       
       // Load contacts for assigned lists
       if (eventData.contactLists?.length > 0) {
@@ -66,14 +69,23 @@ const EventDetail = () => {
     } catch (err) {
       console.error('Failed to send messages:', err)
     }
+}
+
+  const handleSaveReminders = async (reminderData) => {
+    try {
+      await eventService.saveReminderSettings(eventId, reminderData)
+      setReminderSettings(reminderData)
+    } catch (err) {
+      console.error('Failed to save reminder settings:', err)
+    }
   }
 
   const tabs = [
     { id: 'overview', label: 'Overview', icon: 'BarChart3' },
     { id: 'contacts', label: 'Contacts', icon: 'Users' },
-    { id: 'messages', label: 'Messages', icon: 'MessageSquare' }
+    { id: 'messages', label: 'Messages', icon: 'MessageSquare' },
+    ...(isAdmin ? [{ id: 'reminders', label: 'Reminders', icon: 'Bell' }] : [])
   ]
-
   if (loading) {
     return (
       <div className="space-y-6">
@@ -119,15 +131,7 @@ const EventDetail = () => {
             </div>
 </div>
           
-          <div className="flex space-x-3">
-            <Button
-              variant="secondary"
-              size="sm"
-              icon="Settings"
-              onClick={() => navigate('/settings')}
-            >
-              Settings
-            </Button>
+<div className="flex space-x-3">
             <Button
               variant="secondary"
               size="sm"
@@ -255,6 +259,96 @@ const EventDetail = () => {
             contacts={contacts}
             onSendMessages={handleSendMessages}
           />
+)}
+
+        {activeTab === 'reminders' && reminderSettings && (
+          <Card>
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900">Event Reminder Settings</h3>
+                <p className="text-sm text-gray-600">Configure reminder settings specific to this event (overrides global settings)</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Number of Reminders
+                  </label>
+                  <select
+                    value={reminderSettings.maxReminders}
+                    onChange={(e) => setReminderSettings(prev => ({ ...prev, maxReminders: parseInt(e.target.value) }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-whatsapp-primary focus:border-transparent"
+                  >
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => (
+                      <option key={num} value={num}>{num}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Duration Between Reminders
+                  </label>
+                  <div className="flex space-x-2">
+                    <input
+                      type="number"
+                      min="1"
+                      max="365"
+                      value={reminderSettings.maxDurationValue}
+                      onChange={(e) => setReminderSettings(prev => ({ ...prev, maxDurationValue: parseInt(e.target.value) }))}
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-whatsapp-primary focus:border-transparent"
+                    />
+                    <select
+                      value={reminderSettings.maxDurationType}
+                      onChange={(e) => setReminderSettings(prev => ({ ...prev, maxDurationType: e.target.value }))}
+                      className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-whatsapp-primary focus:border-transparent"
+                    >
+                      <option value="minutes">Minutes</option>
+                      <option value="hours">Hours</option>
+                      <option value="days">Days</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-3">
+                <input
+                  type="checkbox"
+                  id="overrideGlobal"
+                  checked={reminderSettings.overrideGlobal}
+                  onChange={(e) => setReminderSettings(prev => ({ ...prev, overrideGlobal: e.target.checked }))}
+                  className="h-4 w-4 text-whatsapp-primary focus:ring-whatsapp-primary border-gray-300 rounded"
+                />
+                <label htmlFor="overrideGlobal" className="text-sm font-medium text-gray-700">
+                  Override global reminder settings for this event
+                </label>
+              </div>
+
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                <div className="flex items-start space-x-3">
+                  <ApperIcon name="AlertTriangle" size={20} className="text-amber-500 mt-0.5" />
+                  <div>
+                    <h4 className="text-sm font-medium text-amber-900">Event-Specific Settings</h4>
+                    <p className="text-sm text-amber-700 mt-1">
+                      {reminderSettings.overrideGlobal 
+                        ? 'This event will use these custom reminder settings instead of the global configuration.'
+                        : 'Enable override to use custom settings for this event. Otherwise, global settings will apply.'
+                      }
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-gray-200">
+                <Button
+                  onClick={() => handleSaveReminders(reminderSettings)}
+                  icon="Save"
+                >
+                  Save Reminder Settings
+                </Button>
+              </div>
+            </div>
+          </Card>
         )}
       </div>
     </motion.div>
