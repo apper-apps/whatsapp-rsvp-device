@@ -328,9 +328,9 @@ const handleExportWithFilters = () => {
         />
         <StatsCard
           title="Messages Delivered"
-          value={`${stats.messagesDelivered} (${stats.deliveryRate}%)`}
+value={`${stats.messagesDelivered} (${stats.deliveryRate}%)`}
           icon="Check"
-          color="whatsapp-primary"
+          color="basecamp-green"
         />
         <StatsCard
           title="RSVP Responses"

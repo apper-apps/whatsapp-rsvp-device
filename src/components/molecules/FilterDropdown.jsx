@@ -24,7 +24,7 @@ const FilterDropdown = ({
     <div className={`relative ${className}`}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-whatsapp-primary"
+className="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-basecamp-primary"
       >
         <span>{selectedOption?.label || label}</span>
         <ApperIcon 
@@ -56,7 +56,7 @@ className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg 
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Search..."
-                    className="w-full pl-10 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-whatsapp-primary focus:border-whatsapp-primary"
+className="w-full pl-10 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-basecamp-primary focus:border-basecamp-primary"
                     onClick={(e) => e.stopPropagation()}
                   />
                 </div>

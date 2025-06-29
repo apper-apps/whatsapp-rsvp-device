@@ -14,7 +14,7 @@ const Empty = ({
   return (
     <Card className={`text-center py-16 ${className}`}>
       <div className="max-w-md mx-auto">
-        <div className="w-20 h-20 bg-gradient-to-br from-whatsapp-primary to-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+<div className="w-20 h-20 bg-basecamp-primary rounded-full flex items-center justify-center mx-auto mb-6">
           <ApperIcon name={icon} size={40} className="text-white" />
         </div>
         

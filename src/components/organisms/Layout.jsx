@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(true)
 
   return (
-    <div className="flex h-screen bg-whatsapp-background">
+<div className="flex h-screen bg-basecamp-background">
       {/* Sidebar */}
       <Sidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
       

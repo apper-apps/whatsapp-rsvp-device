@@ -178,7 +178,7 @@ const ContactLists = () => {
                 {/* Header */}
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-gray-900 group-hover:text-whatsapp-primary transition-colors">
+<h3 className="text-lg font-semibold text-gray-900 group-hover:text-basecamp-primary transition-colors">
                       {list.name}
                     </h3>
                     <p className="text-sm text-gray-500 mt-1">

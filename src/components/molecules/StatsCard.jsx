@@ -10,12 +10,13 @@ const StatsCard = ({
   color = 'whatsapp-primary',
   trend
 }) => {
-  const colorClasses = {
-    'whatsapp-primary': 'bg-gradient-to-br from-whatsapp-primary to-green-500 text-white',
-    'blue': 'bg-gradient-to-br from-blue-500 to-blue-600 text-white',
-    'purple': 'bg-gradient-to-br from-purple-500 to-purple-600 text-white',
-    'orange': 'bg-gradient-to-br from-orange-500 to-orange-600 text-white',
-    'red': 'bg-gradient-to-br from-red-500 to-red-600 text-white'
+const colorClasses = {
+    'basecamp-primary': 'bg-basecamp-primary text-white',
+    'basecamp-green': 'bg-basecamp-green text-white',
+    'blue': 'bg-basecamp-blue text-white',
+    'purple': 'bg-basecamp-purple text-white',
+    'orange': 'bg-basecamp-orange text-white',
+    'red': 'bg-basecamp-red text-white'
   }
 
   return (

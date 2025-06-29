@@ -144,7 +144,7 @@ const loadEventData = async () => {
       className="space-y-6"
     >
       {/* Event Header */}
-      <Card className="bg-gradient-to-r from-whatsapp-primary to-green-500 text-white">
+<Card className="bg-basecamp-primary text-white">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
           <div className="flex items-start space-x-4">
             <Button
@@ -214,8 +214,8 @@ const loadEventData = async () => {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
-                activeTab === tab.id
-                  ? 'border-whatsapp-primary text-whatsapp-primary'
+activeTab === tab.id
+                  ? 'border-basecamp-primary text-basecamp-primary'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
@@ -327,9 +327,9 @@ const loadEventData = async () => {
                     Number of Reminders
                   </label>
                   <select
-                    value={reminderSettings.maxReminders}
+value={reminderSettings.maxReminders}
                     onChange={(e) => setReminderSettings(prev => ({ ...prev, maxReminders: parseInt(e.target.value) }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-whatsapp-primary focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-basecamp-primary focus:border-transparent"
                   >
                     {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => (
                       <option key={num} value={num}>{num}</option>
@@ -346,14 +346,14 @@ const loadEventData = async () => {
                       type="number"
                       min="1"
                       max="365"
-                      value={reminderSettings.maxDurationValue}
+value={reminderSettings.maxDurationValue}
                       onChange={(e) => setReminderSettings(prev => ({ ...prev, maxDurationValue: parseInt(e.target.value) }))}
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-whatsapp-primary focus:border-transparent"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-basecamp-primary focus:border-transparent"
                     />
                     <select
-                      value={reminderSettings.maxDurationType}
+value={reminderSettings.maxDurationType}
                       onChange={(e) => setReminderSettings(prev => ({ ...prev, maxDurationType: e.target.value }))}
-                      className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-whatsapp-primary focus:border-transparent"
+                      className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-basecamp-primary focus:border-transparent"
                     >
                       <option value="minutes">Minutes</option>
                       <option value="hours">Hours</option>
@@ -367,9 +367,9 @@ const loadEventData = async () => {
                 <input
                   type="checkbox"
                   id="overrideGlobal"
-                  checked={reminderSettings.overrideGlobal}
+checked={reminderSettings.overrideGlobal}
                   onChange={(e) => setReminderSettings(prev => ({ ...prev, overrideGlobal: e.target.checked }))}
-                  className="h-4 w-4 text-whatsapp-primary focus:ring-whatsapp-primary border-gray-300 rounded"
+                  className="h-4 w-4 text-basecamp-primary focus:ring-basecamp-primary border-gray-300 rounded"
                 />
                 <label htmlFor="overrideGlobal" className="text-sm font-medium text-gray-700">
                   Override global reminder settings for this event

@@ -11,7 +11,7 @@ const Input = ({
   required = false,
   ...props
 }) => {
-  const baseClasses = 'w-full px-3 py-2 border rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-whatsapp-primary focus:border-transparent'
+const baseClasses = 'w-full px-3 py-2 border rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-basecamp-primary focus:border-transparent'
   const errorClasses = error ? 'border-red-300 focus:ring-red-500' : 'border-gray-300'
   const iconClasses = icon ? (iconPosition === 'left' ? 'pl-10' : 'pr-10') : ''
 

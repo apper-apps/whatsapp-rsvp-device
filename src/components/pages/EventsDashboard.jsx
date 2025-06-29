@@ -121,8 +121,8 @@ const [searchTerm, setSearchTerm] = useState('')
         <StatsCard
           title="Total Events"
           value={events.length}
-          icon="Calendar"
-          color="whatsapp-primary"
+icon="Calendar"
+          color="basecamp-primary"
         />
         <StatsCard
           title="Active Events"
@@ -228,7 +228,7 @@ const [searchTerm, setSearchTerm] = useState('')
                   {/* Header */}
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-gray-900 group-hover:text-whatsapp-primary transition-colors">
+<h3 className="text-lg font-semibold text-gray-900 group-hover:text-basecamp-primary transition-colors">
                         {event.name}
                       </h3>
                       <p className="text-sm text-gray-500 mt-1">
@@ -260,8 +260,8 @@ const [searchTerm, setSearchTerm] = useState('')
                       </span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div
-                        className="bg-gradient-to-r from-whatsapp-primary to-green-500 h-2 rounded-full transition-all duration-300"
+<div
+                        className="bg-basecamp-green h-2 rounded-full transition-all duration-300"
                         style={{ width: `${rsvpProgress.percentage}%` }}
                       ></div>
                     </div>
@@ -342,8 +342,8 @@ const [searchTerm, setSearchTerm] = useState('')
                             {rsvpProgress.responded}/{rsvpProgress.total} ({rsvpProgress.percentage}%)
                           </div>
                           <div className="w-full bg-gray-200 rounded-full h-2">
-                            <div
-                              className="bg-gradient-to-r from-whatsapp-primary to-green-500 h-2 rounded-full"
+<div
+                              className="bg-basecamp-green h-2 rounded-full"
                               style={{ width: `${rsvpProgress.percentage}%` }}
                             ></div>
                           </div>
