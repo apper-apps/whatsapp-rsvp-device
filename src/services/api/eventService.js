@@ -112,8 +112,58 @@ return stats
     // In a real app, this would save to database
     // For now, we'll just simulate success
     toast.success('Event reminder settings saved successfully!')
+return { ...reminderData }
+  }
+
+  async getContactLists(eventId) {
+    await this.delay(200)
     
-    return { ...reminderData }
+    const event = this.events.find(e => e.Id === parseInt(eventId))
+    if (!event) {
+      throw new Error('Event not found')
+    }
+    
+    return event.contactLists || []
+  }
+
+  async assignContactList(eventId, contactListId) {
+    await this.delay(300)
+    
+    const eventIndex = this.events.findIndex(e => e.Id === parseInt(eventId))
+    if (eventIndex === -1) {
+      throw new Error('Event not found')
+    }
+    
+    const event = this.events[eventIndex]
+    if (!event.contactLists) {
+      event.contactLists = []
+    }
+    
+    const listId = parseInt(contactListId)
+    if (!event.contactLists.includes(listId)) {
+      event.contactLists.push(listId)
+      toast.success('Contact list assigned to event successfully!')
+    }
+    
+    return { ...event }
+  }
+
+  async unassignContactList(eventId, contactListId) {
+    await this.delay(300)
+    
+    const eventIndex = this.events.findIndex(e => e.Id === parseInt(eventId))
+    if (eventIndex === -1) {
+      throw new Error('Event not found')
+    }
+    
+    const event = this.events[eventIndex]
+    if (event.contactLists) {
+      const listId = parseInt(contactListId)
+      event.contactLists = event.contactLists.filter(id => id !== listId)
+      toast.success('Contact list removed from event successfully!')
+    }
+    
+    return { ...event }
   }
 }
 export default new EventService()

@@ -9,23 +9,28 @@ import Loading from '@/components/ui/Loading'
 import Error from '@/components/ui/Error'
 import ContactsTable from '@/components/organisms/ContactsTable'
 import MessageComposer from '@/components/organisms/MessageComposer'
+import ManageContactListsModal from '@/components/organisms/ManageContactListsModal'
 import ApperIcon from '@/components/ApperIcon'
 import eventService from '@/services/api/eventService'
 import contactService from '@/services/api/contactService'
+import contactListService from '@/services/api/contactListService'
 import messageService from '@/services/api/messageService'
 import { format } from 'date-fns'
 
 const EventDetail = () => {
   const { eventId } = useParams()
   const navigate = useNavigate()
-const [event, setEvent] = useState(null)
+  const [event, setEvent] = useState(null)
   const [contacts, setContacts] = useState([])
+  const [contactLists, setContactLists] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [activeTab, setActiveTab] = useState('overview')
   const [stats, setStats] = useState(null)
   const [reminderSettings, setReminderSettings] = useState(null)
   const [isAdmin] = useState(true) // Mock admin check
+  const [showManageListsModal, setShowManageListsModal] = useState(false)
+  
   useEffect(() => {
     loadEventData()
   }, [eventId])
@@ -54,10 +59,29 @@ const loadEventData = async () => {
         }
         setContacts(allContacts)
       }
+      
+      // Load contact list details
+      await loadContactLists(eventData)
     } catch (err) {
       setError(err.message || 'Failed to load event details')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const loadContactLists = async (eventData = event) => {
+    try {
+      if (eventData?.contactLists?.length > 0) {
+        const listDetails = await Promise.all(
+          eventData.contactLists.map(listId => contactListService.getById(listId))
+        )
+        setContactLists(listDetails)
+      } else {
+        setContactLists([])
+      }
+    } catch (err) {
+      console.error('Failed to load contact lists:', err)
+      setContactLists([])
     }
   }
 
@@ -78,6 +102,15 @@ const loadEventData = async () => {
     } catch (err) {
       console.error('Failed to save reminder settings:', err)
     }
+}
+
+  const handleManageContactLists = () => {
+    setShowManageListsModal(true)
+  }
+
+  const handleContactListsUpdated = async () => {
+    await loadEventData()
+    setShowManageListsModal(false)
   }
 
   const tabs = [
@@ -207,10 +240,28 @@ const loadEventData = async () => {
                 <div>
                   <label className="text-sm font-medium text-gray-500">RSVP Form URL</label>
                   <p className="text-blue-600 hover:underline cursor-pointer">{event.rsvpFormUrl}</p>
-                </div>
+</div>
                 <div>
-                  <label className="text-sm font-medium text-gray-500">Contact Lists</label>
-                  <p className="text-gray-900">{event.contactLists?.length || 0} lists assigned</p>
+                  <label className="text-sm font-medium text-gray-500 mb-2">Contact Lists</label>
+                  {contactLists.length > 0 ? (
+                    <div className="space-y-2">
+                      {contactLists.map((list) => (
+                        <div key={list.Id} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
+                          <div>
+                            <span className="text-sm font-medium text-gray-900">{list.name}</span>
+                            <span className="text-xs text-gray-500 ml-2">
+                              {list.contactCount} contacts
+                            </span>
+                          </div>
+                          <Badge variant="secondary" className="text-xs">
+                            {list.tags?.[0] || 'General'}
+                          </Badge>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-gray-500 text-sm">No contact lists assigned</p>
+                  )}
                 </div>
               </div>
             </Card>
@@ -226,10 +277,11 @@ const loadEventData = async () => {
                 >
                   Send Messages
                 </Button>
-                <Button
+<Button
                   variant="outline"
                   icon="UserPlus"
                   className="w-full justify-center"
+                  onClick={handleManageContactLists}
                 >
                   Manage Contact Lists
                 </Button>
@@ -349,8 +401,17 @@ const loadEventData = async () => {
               </div>
             </div>
           </Card>
-        )}
+)}
       </div>
+
+      {/* Manage Contact Lists Modal */}
+      {showManageListsModal && (
+        <ManageContactListsModal
+          event={event}
+          onClose={() => setShowManageListsModal(false)}
+          onUpdated={handleContactListsUpdated}
+        />
+      )}
     </motion.div>
   )
 }
