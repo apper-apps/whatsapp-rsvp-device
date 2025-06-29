@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import Button from '@/components/atoms/Button'
-import Card from '@/components/atoms/Card'
-import Badge from '@/components/atoms/Badge'
-import SearchBar from '@/components/molecules/SearchBar'
-import Loading from '@/components/ui/Loading'
-import Error from '@/components/ui/Error'
-import Empty from '@/components/ui/Empty'
-import CreateListModal from '@/components/organisms/CreateListModal'
-import ImportContactsModal from '@/components/organisms/ImportContactsModal'
-import ApperIcon from '@/components/ApperIcon'
-import contactService from '@/services/api/contactService'
-import { format } from 'date-fns'
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { format } from "date-fns";
+import ApperIcon from "@/components/ApperIcon";
+import CreateListModal from "@/components/organisms/CreateListModal";
+import ImportContactsModal from "@/components/organisms/ImportContactsModal";
+import Badge from "@/components/atoms/Badge";
+import Card from "@/components/atoms/Card";
+import Button from "@/components/atoms/Button";
+import SearchBar from "@/components/molecules/SearchBar";
+import Error from "@/components/ui/Error";
+import Empty from "@/components/ui/Empty";
+import Loading from "@/components/ui/Loading";
+import contactService from "@/services/api/contactService";
 
 const ContactLists = () => {
+  const navigate = useNavigate()
   const [contactLists, setContactLists] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -72,8 +74,11 @@ const ContactLists = () => {
         console.error('Failed to delete list:', err)
       }
     }
-  }
+}
 
+  const handleViewContacts = (listId) => {
+    navigate(`/contacts?listId=${listId}`)
+  }
   if (loading) {
     return <Loading type="cards" count={6} />
   }
@@ -235,13 +240,17 @@ const ContactLists = () => {
                   )}
                 </div>
 
-                {/* Actions */}
+{/* Actions */}
                 <div className="flex space-x-2 pt-2 border-t border-gray-100">
                   <Button
                     variant="outline"
                     size="sm"
                     icon="Eye"
                     className="flex-1"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      handleViewContacts(list.Id)
+                    }}
                   >
                     View Contacts
                   </Button>
@@ -256,7 +265,7 @@ const ContactLists = () => {
                 </div>
               </div>
             </Card>
-))}
+          ))}
         </div>
       ) : (
         <Card padding="p-0">
@@ -313,15 +322,17 @@ const ContactLists = () => {
                         <span className="text-gray-400">—</span>
                       )}
                     </td>
-                    <td className="py-4 px-6 text-right">
+<td className="py-4 px-6 text-right">
                       <div className="flex justify-end space-x-2">
                         <Button
                           variant="ghost"
                           size="sm"
                           icon="Eye"
-                        >
-                          View
-                        </Button>
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleViewContacts(list.Id)
+                          }}
+                        />
                         <Button
                           variant="ghost"
                           size="sm"

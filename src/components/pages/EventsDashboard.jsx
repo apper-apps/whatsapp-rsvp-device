@@ -20,8 +20,9 @@ const EventsDashboard = () => {
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  const [searchTerm, setSearchTerm] = useState('')
+const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
+  const [viewMode, setViewMode] = useState('cards')
   const [showCreateModal, setShowCreateModal] = useState(false)
 
   const statusOptions = [
@@ -147,19 +148,44 @@ const EventsDashboard = () => {
         />
       </div>
 
-      {/* Header Actions */}
+{/* Header Actions */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 className="text-2xl font-bold text-gray-900">Events</h2>
           <p className="text-gray-600">Manage your WhatsApp RSVP events</p>
         </div>
-        <Button
-          onClick={handleCreateEvent}
-          icon="Plus"
-          size="lg"
-        >
-          Create Event
-        </Button>
+        <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2">
+            <span className="text-sm font-medium text-gray-700">Views:</span>
+            <div className="flex rounded-lg border border-gray-300 bg-white">
+              <Button
+                variant={viewMode === 'cards' ? 'primary' : 'ghost'}
+                size="sm"
+                icon="Grid3x3"
+                onClick={() => setViewMode('cards')}
+                className="rounded-r-none border-0"
+              >
+                Cards
+              </Button>
+              <Button
+                variant={viewMode === 'list' ? 'primary' : 'ghost'}
+                size="sm"
+                icon="List"
+                onClick={() => setViewMode('list')}
+                className="rounded-l-none border-0 border-l border-gray-300"
+              >
+                List
+              </Button>
+            </div>
+          </div>
+          <Button
+            onClick={handleCreateEvent}
+            icon="Plus"
+            size="lg"
+          >
+            Create Event
+          </Button>
+        </div>
       </div>
 
       {/* Filters */}
@@ -186,7 +212,7 @@ const EventsDashboard = () => {
           description="Try adjusting your search or filter criteria"
           icon="Search"
         />
-      ) : (
+) : viewMode === 'cards' ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredEvents.map((event) => {
             const rsvpProgress = getRsvpProgress(event)
@@ -263,6 +289,97 @@ const EventsDashboard = () => {
             )
           })}
         </div>
+      ) : (
+        <Card padding="p-0">
+          <div className="overflow-x-auto">
+            <table className="w-full table-zebra">
+              <thead className="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th className="text-left py-4 px-6 font-semibold text-gray-900">Event</th>
+                  <th className="text-left py-4 px-6 font-semibold text-gray-900">Date</th>
+                  <th className="text-left py-4 px-6 font-semibold text-gray-900">Location</th>
+                  <th className="text-left py-4 px-6 font-semibold text-gray-900">Status</th>
+                  <th className="text-left py-4 px-6 font-semibold text-gray-900">RSVP Progress</th>
+                  <th className="text-right py-4 px-6 font-semibold text-gray-900">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredEvents.map((event) => {
+                  const rsvpProgress = getRsvpProgress(event)
+                  
+                  return (
+                    <tr key={event.Id} className="border-b border-gray-100 hover:bg-gray-50 cursor-pointer" onClick={() => handleViewEvent(event.Id)}>
+                      <td className="py-4 px-6">
+                        <div className="font-medium text-gray-900">{event.name}</div>
+                        {event.description && (
+                          <div className="text-sm text-gray-600 mt-1 line-clamp-1">
+                            {event.description}
+                          </div>
+                        )}
+                      </td>
+                      <td className="py-4 px-6">
+                        <div className="text-sm text-gray-900">
+                          {format(new Date(event.date), 'MMM dd, yyyy')}
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          {format(new Date(event.date), 'h:mm a')}
+                        </div>
+                      </td>
+                      <td className="py-4 px-6">
+                        <div className="flex items-center text-gray-600">
+                          <ApperIcon name="MapPin" size={16} className="mr-2" />
+                          <span className="text-sm">{event.location}</span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6">
+                        <Badge variant={getStatusColor(event.status)}>
+                          {event.status}
+                        </Badge>
+                      </td>
+                      <td className="py-4 px-6">
+                        <div className="space-y-1">
+                          <div className="text-sm font-medium text-gray-900">
+                            {rsvpProgress.responded}/{rsvpProgress.total} ({rsvpProgress.percentage}%)
+                          </div>
+                          <div className="w-full bg-gray-200 rounded-full h-2">
+                            <div
+                              className="bg-gradient-to-r from-whatsapp-primary to-green-500 h-2 rounded-full"
+                              style={{ width: `${rsvpProgress.percentage}%` }}
+                            ></div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-4 px-6 text-right">
+                        <div className="flex justify-end space-x-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            icon="Eye"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              handleViewEvent(event.Id)
+                            }}
+                          >
+                            View
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            icon="ArrowRight"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              handleViewEvent(event.Id)
+                            }}
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        </Card>
       )}
 
       {/* Create Event Modal */}

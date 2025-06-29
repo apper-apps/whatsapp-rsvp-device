@@ -6,6 +6,7 @@ import Input from '@/components/atoms/Input'
 import Badge from '@/components/atoms/Badge'
 import ApperIcon from '@/components/ApperIcon'
 import { toast } from 'react-toastify'
+import packageInfo from '../../../package.json'
 
 const Settings = () => {
   const [whatsappSettings, setWhatsappSettings] = useState({
@@ -360,9 +361,9 @@ const handleSaveNotifications = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-3">
-              <div className="flex justify-between">
+<div className="flex justify-between">
                 <span className="text-sm font-medium text-gray-500">Version</span>
-                <span className="text-sm text-gray-900">1.0.0</span>
+                <span className="text-sm text-gray-900">{packageInfo.version}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm font-medium text-gray-500">Last Updated</span>
