@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Button from '@/components/atoms/Button'
 import Card from '@/components/atoms/Card'
 import Badge from '@/components/atoms/Badge'
+import Input from '@/components/atoms/Input'
 import SearchBar from '@/components/molecules/SearchBar'
 import FilterDropdown from '@/components/molecules/FilterDropdown'
 import StatsCard from '@/components/molecules/StatsCard'
@@ -15,6 +16,7 @@ import contactService from '@/services/api/contactService'
 import messageService from '@/services/api/messageService'
 import rsvpService from '@/services/api/rsvpService'
 import { format } from 'date-fns'
+import Papa from 'papaparse'
 
 const Reports = () => {
   const [events, setEvents] = useState([])
@@ -23,9 +25,12 @@ const Reports = () => {
   const [rsvps, setRsvps] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  const [searchTerm, setSearchTerm] = useState('')
+const [searchTerm, setSearchTerm] = useState('')
   const [eventFilter, setEventFilter] = useState('all')
   const [statusFilter, setStatusFilter] = useState('all')
+  const [showExportModal, setShowExportModal] = useState(false)
+  const [selectedEventId, setSelectedEventId] = useState('all')
+  const [selectedRsvpStatus, setSelectedRsvpStatus] = useState([])
 
   useEffect(() => {
     loadReportData()
@@ -66,8 +71,14 @@ const Reports = () => {
     { value: 'read', label: 'Message Read' },
     { value: 'responded', label: 'RSVP Responded' },
     { value: 'failed', label: 'Message Failed' }
-  ]
+]
 
+  const rsvpStatusOptions = [
+    { value: 'yes', label: 'Yes' },
+    { value: 'no', label: 'No' },
+    { value: 'maybe', label: 'Maybe' },
+    { value: 'pending', label: 'Pending' }
+  ]
   const generateReportData = () => {
     return contacts.map(contact => {
       const contactMessages = messages.filter(m => m.contactId === contact.Id.toString())
@@ -195,34 +206,70 @@ const Reports = () => {
     )
   }
 
+const handleExportWithFilters = () => {
+    setShowExportModal(true)
+  }
+
   const handleExportData = async () => {
     try {
-      const csvHeaders = ['Name', 'Phone', 'Email', 'Message Status', 'RSVP Status', 'Last Message', 'RSVP Date', 'Notes']
-      const csvRows = filteredData.map(item => [
-        item.name,
-        item.phone,
-        item.email || '',
-        item.messageStatus,
-        item.rsvpStatus,
-        item.lastMessageAt ? format(new Date(item.lastMessageAt), 'yyyy-MM-dd HH:mm') : '',
-        item.rsvpSubmittedAt ? format(new Date(item.rsvpSubmittedAt), 'yyyy-MM-dd HH:mm') : '',
-        item.messageError || ''
-      ])
+      let dataToExport = [...reportData]
 
-      const csvContent = [csvHeaders, ...csvRows]
-        .map(row => row.map(field => `"${field}"`).join(','))
-        .join('\n')
+      // Apply event filter
+      if (selectedEventId !== 'all') {
+        dataToExport = dataToExport.filter(item => item.eventId === selectedEventId)
+      }
 
-      const blob = new Blob([csvContent], { type: 'text/csv' })
+      // Apply RSVP status filter
+      if (selectedRsvpStatus.length > 0) {
+        dataToExport = dataToExport.filter(item => selectedRsvpStatus.includes(item.rsvpStatus))
+      }
+
+      const csvData = dataToExport.map(item => ({
+        'Name': item.name,
+        'Phone': item.phone,
+        'Email': item.email || '',
+        'Message Status': item.messageStatus,
+        'RSVP Status': item.rsvpStatus,
+        'Last Message': item.lastMessageAt ? format(new Date(item.lastMessageAt), 'yyyy-MM-dd HH:mm') : '',
+        'RSVP Date': item.rsvpSubmittedAt ? format(new Date(item.rsvpSubmittedAt), 'yyyy-MM-dd HH:mm') : '',
+        'Notes': item.messageError || ''
+      }))
+
+      const csv = Papa.unparse(csvData)
+      
+      // Create filename with filter context
+      let filename = 'rsvp-report'
+      if (selectedEventId !== 'all') {
+        const selectedEvent = events.find(e => e.Id.toString() === selectedEventId)
+        filename += `-${selectedEvent?.name.replace(/[^a-zA-Z0-9]/g, '-') || 'event'}`
+      }
+      if (selectedRsvpStatus.length > 0 && selectedRsvpStatus.length < 4) {
+        filename += `-${selectedRsvpStatus.join('-')}`
+      }
+      filename += `-${Date.now()}.csv`
+
+      const blob = new Blob([csv], { type: 'text/csv' })
       const url = window.URL.createObjectURL(blob)
       const link = document.createElement('a')
       link.href = url
-      link.download = `rsvp-report-${Date.now()}.csv`
+      link.download = filename
       link.click()
       window.URL.revokeObjectURL(url)
+      
+      setShowExportModal(false)
+      setSelectedEventId('all')
+      setSelectedRsvpStatus([])
     } catch (err) {
       console.error('Failed to export data:', err)
     }
+  }
+
+  const toggleRsvpStatus = (status) => {
+    setSelectedRsvpStatus(prev => 
+      prev.includes(status) 
+        ? prev.filter(s => s !== status)
+        : [...prev, status]
+    )
   }
 
   if (loading) {
@@ -262,10 +309,10 @@ const Reports = () => {
           <h1 className="text-2xl font-bold text-gray-900">Reports</h1>
           <p className="text-gray-600">Comprehensive RSVP and engagement analytics</p>
         </div>
-        <Button
+<Button
           variant="outline"
           icon="Download"
-          onClick={handleExportData}
+          onClick={handleExportWithFilters}
         >
           Export Report
         </Button>
@@ -402,7 +449,95 @@ const Reports = () => {
             </table>
           </div>
         </Card>
-      )}
+)}
+
+      {/* Export Modal */}
+      <AnimatePresence>
+        {showExportModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+            onClick={(e) => e.target === e.currentTarget && setShowExportModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="bg-white rounded-xl shadow-xl max-w-md w-full p-6"
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-lg font-semibold text-gray-900">Export Report</h3>
+                <button
+                  onClick={() => setShowExportModal(false)}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  <ApperIcon name="X" size={20} />
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Select Event
+                  </label>
+                  <FilterDropdown
+                    label="Choose event"
+                    options={eventOptions}
+                    value={selectedEventId}
+                    onChange={setSelectedEventId}
+                    searchable={true}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    RSVP Status (Optional)
+                  </label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {rsvpStatusOptions.map((option) => (
+                      <label
+                        key={option.value}
+                        className="flex items-center space-x-2 p-2 border rounded-lg cursor-pointer hover:bg-gray-50"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={selectedRsvpStatus.includes(option.value)}
+                          onChange={() => toggleRsvpStatus(option.value)}
+                          className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                        />
+                        <span className="text-sm text-gray-700">{option.label}</span>
+                      </label>
+                    ))}
+                  </div>
+                  {selectedRsvpStatus.length === 0 && (
+                    <p className="text-xs text-gray-500 mt-1">All RSVP statuses will be included</p>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex space-x-3 mt-6">
+                <Button
+                  variant="outline"
+                  onClick={() => setShowExportModal(false)}
+                  className="flex-1"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="primary"
+                  onClick={handleExportData}
+                  icon="Download"
+                  className="flex-1"
+                >
+                  Export
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }
