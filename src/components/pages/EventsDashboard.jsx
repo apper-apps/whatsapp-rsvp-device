@@ -118,25 +118,25 @@ const [searchTerm, setSearchTerm] = useState('')
     >
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatsCard
+<StatsCard
           title="Total Events"
           value={events.length}
-icon="Calendar"
-          color="basecamp-primary"
+          icon="Calendar"
+          color="primary"
         />
         <StatsCard
           title="Active Events"
           value={events.filter(e => e.status === 'active').length}
           icon="Play"
-          color="blue"
+          color="accent-blue"
         />
-        <StatsCard
+<StatsCard
           title="Total Invites"
           value="1,247"
           change="+12%"
           trend="up"
           icon="Send"
-          color="purple"
+          color="accent-purple"
         />
         <StatsCard
           title="Response Rate"
@@ -144,7 +144,7 @@ icon="Calendar"
           change="+5.2%"
           trend="up"
           icon="TrendingUp"
-          color="orange"
+          color="accent-orange"
         />
       </div>
 

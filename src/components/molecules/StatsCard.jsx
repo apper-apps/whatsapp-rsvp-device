@@ -11,12 +11,12 @@ const StatsCard = ({
   trend
 }) => {
 const colorClasses = {
-    'basecamp-primary': 'bg-basecamp-primary text-white',
-    'basecamp-green': 'bg-basecamp-green text-white',
-    'blue': 'bg-basecamp-blue text-white',
-    'purple': 'bg-basecamp-purple text-white',
-    'orange': 'bg-basecamp-orange text-white',
-    'red': 'bg-basecamp-red text-white'
+    'primary': 'bg-primary-600 text-white',
+    'accent-blue': 'bg-accent-blue text-white',
+    'accent-green': 'bg-accent-green text-white',
+    'accent-purple': 'bg-accent-purple text-white',
+    'accent-orange': 'bg-accent-orange text-white',
+    'accent-red': 'bg-accent-red text-white'
   }
 
   return (
