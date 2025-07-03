@@ -6,11 +6,10 @@ const Card = ({
   className = '', 
   hover = false,
   padding = 'p-6',
-  ...props 
+...props 
 }) => {
-  const baseClasses = 'bg-white rounded-xl shadow-sm border border-gray-100'
+  const baseClasses = 'rounded-xl shadow-sm border border-gray-100'
   const hoverClasses = hover ? 'hover:shadow-lg hover:scale-[1.02] cursor-pointer' : ''
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
