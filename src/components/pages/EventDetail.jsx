@@ -147,12 +147,12 @@ const loadEventData = async () => {
 <Card className="bg-basecamp-primary text-white">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
           <div className="flex items-start space-x-4">
-            <Button
+<Button
               variant="ghost"
               size="sm"
               icon="ArrowLeft"
               onClick={() => navigate('/events')}
-              className="text-white hover:bg-white hover:bg-opacity-20"
+              className="hover:bg-white hover:bg-opacity-20"
             />
 <div>
               <h1 className="text-2xl font-bold">{event.name}</h1>
