@@ -19,7 +19,7 @@ const variants = {
     primary: 'bg-basecamp-primary text-white hover:bg-blue-700 focus:ring-basecamp-primary shadow-soft hover:shadow-medium',
     secondary: 'bg-white text-basecamp-dark border border-gray-300 hover:bg-gray-50 focus:ring-basecamp-primary shadow-sm hover:shadow-soft',
     outline: 'border-2 border-basecamp-primary text-basecamp-primary hover:bg-basecamp-primary hover:text-white focus:ring-basecamp-primary',
-    ghost: 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:ring-gray-500',
+    ghost: 'text-text-secondary hover:bg-gray-100 hover:text-gray-900 focus:ring-gray-500',
     danger: 'bg-basecamp-red text-white hover:bg-red-600 focus:ring-basecamp-red shadow-soft hover:shadow-medium'
   }
   
