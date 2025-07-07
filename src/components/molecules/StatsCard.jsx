@@ -7,24 +7,14 @@ const StatsCard = ({
   value, 
   change, 
   icon, 
-  color = 'whatsapp-primary',
   trend
 }) => {
-const colorClasses = {
-    'primary': 'bg-primary-600 text-white',
-    'accent-blue': 'bg-accent-blue text-white',
-    'accent-green': 'bg-accent-green text-white',
-    'accent-purple': 'bg-accent-purple text-white',
-    'accent-orange': 'bg-accent-orange text-white',
-    'accent-red': 'bg-accent-red text-white'
-  }
-
-  return (
-    <Card className={`${colorClasses[color]} text-white`} hover={true}>
+return (
+    <Card hover={true}>
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium opacity-90">{title}</p>
-          <p className="text-2xl font-bold mt-1">{value}</p>
+          <p className="text-sm font-medium text-secondary-600">{title}</p>
+          <p className="text-2xl font-bold mt-1 text-primary">{value}</p>
           {change && (
             <div className="flex items-center mt-2">
               <ApperIcon 
@@ -35,9 +25,9 @@ const colorClasses = {
               <span className="text-sm">{change}</span>
             </div>
           )}
-        </div>
-        <div className="p-3 bg-white bg-opacity-20 rounded-lg">
-          <ApperIcon name={icon} size={24} />
+</div>
+        <div className="p-3 bg-primary-50 rounded-lg">
+          <ApperIcon name={icon} size={24} className="text-primary-600" />
         </div>
       </div>
     </Card>
