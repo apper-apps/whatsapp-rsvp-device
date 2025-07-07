@@ -151,11 +151,9 @@ body {
 .Toastify__progress-bar {
   background: rgba(255, 255, 255, 0.3);
 }
+}
 
-/* Custom hover colors */
-.bg-custom-hover { background-color: #111287; }
-.text-custom-hover-white { color: #ffffff; }
-
+/* Animation utilities */
 /* Animation utilities */
 .animate-shimmer {
   background: linear-gradient(110deg, #edf2f7 8%, #e2e8f0 18%, #edf2f7 33%);
