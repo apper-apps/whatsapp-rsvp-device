@@ -43,11 +43,12 @@ theme: {
         background: 'rgb(var(--color-background) / <alpha-value>)',
         surface: 'rgb(var(--color-surface) / <alpha-value>)',
         border: 'rgb(var(--color-border) / <alpha-value>)',
-        text: {
+text: {
           primary: 'rgb(var(--color-text-primary) / <alpha-value>)',
           secondary: 'rgb(var(--color-text-secondary) / <alpha-value>)',
           muted: 'rgb(var(--color-text-muted) / <alpha-value>)'
-        }
+        },
+        'custom-text': 'rgb(var(--color-custom-text) / <alpha-value>)'
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
