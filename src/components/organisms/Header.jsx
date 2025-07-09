@@ -2,10 +2,9 @@ import React from 'react'
 import { useLocation } from 'react-router-dom'
 import Button from '@/components/atoms/Button'
 import ApperIcon from '@/components/ApperIcon'
-import { useTheme } from '@/App'
+
 const Header = ({ onMenuClick }) => {
   const location = useLocation()
-  const { isDark, toggleTheme } = useTheme()
   
   const getPageTitle = () => {
     switch (location.pathname) {
@@ -44,20 +43,7 @@ return (
             <p className="text-sm text-text-secondary">Manage your WhatsApp RSVP campaigns</p>
           </div>
         </div>
-        
-        <div className="flex items-center space-x-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={toggleTheme}
-            className="relative"
-          >
-            <ApperIcon 
-              name={isDark ? "Sun" : "Moon"} 
-              size={18} 
-              className="text-text-secondary hover:text-text-primary transition-colors"
-            />
-          </Button>
+<div className="flex items-center space-x-4">
           <Button
             variant="ghost"
             size="sm"
